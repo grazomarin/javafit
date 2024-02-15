@@ -8,11 +8,6 @@ public class Excercise {
     private List<Set> sets; // each element represents a weight in each set
     private Boolean completed;
 
-    public Excercise(String name, List<Set> sets) {
-        this.name = name;
-        this.sets = sets;
-    }
-
     public Excercise(String name) {
         this.name = name;
         this.sets = new ArrayList<Set>();
@@ -22,11 +17,18 @@ public class Excercise {
     // MODIFIES: this
     // EFFECTS: adds a set to the excercise
     public void addSet(int weight, int reps, int rir) {
-        // TODO
+        sets.add(new Set(weight, reps, rir));
     }
 
-    public String printExcercise() {
-        return name;
+    public void printExcercise() {
+        System.out.println(name + ":");
+        if (sets.isEmpty()) {
+            System.out.println("    1: ???kg: ??? reps || ???RIR");
+        } else {
+            for (int i = 1; i <= sets.size(); i++) {
+                System.out.println("    " + i + ": " + sets.get(i - 1).returnSet());
+            }
+        }
     }
 
 }
