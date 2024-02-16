@@ -75,18 +75,18 @@ public class JavaFit {
         // TODO add ability to view a template in detail
     }
 
-    // REQUIRES: name has a non-zero length and is unique
     // EFFECTS: creates a new workout template
     private void createTemplate() {
         System.out.println("Enter the name of the template:");
         String name = scanner.next();
-        Template template = new Template(name);
-        templates.add(template);
-        addExercises(template);
+        if (name.isEmpty()) {
             System.out.println("Name cannot be empty...");
+            createTemplate();
+        } else {
             Template template = new Template(name);
             templates.add(template);
             addExercises(template);
+        }
     }
 
     // MODIFIES: this
@@ -128,7 +128,6 @@ public class JavaFit {
     }
 
 
-    // REQUIRES: exercise name has a non-zero length
     // MODIFIES: this
     // EFFECTS: adds exercises to the template
     private void addExercises(Template template) {
@@ -145,10 +144,12 @@ public class JavaFit {
                     keepGoing = false;
                 }
             } else {
-                template.addExcercise(name);
-                counter++;
+                if (name.isEmpty()) {
+                    System.out.println("Name cannot be empty...");
+                } else {
                     template.addExercise(name);
                     counter++;
+                }
             }
         }
         System.out.println("Template \"" + template.getName() + "\" was created!");
