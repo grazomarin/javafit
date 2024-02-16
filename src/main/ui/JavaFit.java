@@ -83,6 +83,10 @@ public class JavaFit {
         Template template = new Template(name);
         templates.add(template);
         addExercises(template);
+            System.out.println("Name cannot be empty...");
+            Template template = new Template(name);
+            templates.add(template);
+            addExercises(template);
     }
 
     // MODIFIES: this
@@ -110,7 +114,7 @@ public class JavaFit {
         boolean keepGoing = true;
 
         System.out.println("Let's start the workout!");
-        this.currentWorkout.printTemplate();
+        System.out.println(this.currentWorkout.returnTemplate());
 
         while (keepGoing) {
             displayWorkoutMenu();
@@ -143,6 +147,8 @@ public class JavaFit {
             } else {
                 template.addExcercise(name);
                 counter++;
+                    template.addExercise(name);
+                    counter++;
             }
         }
         System.out.println("Template \"" + template.getName() + "\" was created!");
@@ -156,7 +162,7 @@ public class JavaFit {
             System.out.println("Enter the index of the exercise: enter \"q\" to cancel.");
             String command = scanner.next().toLowerCase();
             this.handlAddSetMenuCommand(command);
-            this.currentWorkout.printTemplate();
+            System.out.println(this.currentWorkout.returnTemplate());
 
             if (command.equalsIgnoreCase("q")) {
                 keepGoing = false;
@@ -191,6 +197,7 @@ public class JavaFit {
         System.out.println("\ta -> add a set");
         // TODO add ability to remove a set
         // TODO add ability to change a set
+        // TODO add ability to remove an exercise
         System.out.println("\tv -> view the workout");
         System.out.println("\tc -> complete the workout");
     }
@@ -202,7 +209,7 @@ public class JavaFit {
                 addSet();
                 break;
             case "v":
-                this.currentWorkout.printTemplate();
+                System.out.println(this.currentWorkout.returnTemplate());
                 break;
             case "c":
                 System.out.println("Workout completed! Template updated.");

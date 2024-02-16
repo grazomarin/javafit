@@ -3,12 +3,12 @@ package model;
 import java.util.*;
 
 // Represents an excercise in a workout
-public class Excercise {
+public class Exercise {
     private String name;
     private List<Set> sets; // each element represents a weight in each set
     private Boolean completed;
 
-    public Excercise(String name) {
+    public Exercise(String name) {
         this.name = name;
         this.sets = new ArrayList<Set>();
     }
@@ -20,16 +20,24 @@ public class Excercise {
         sets.add(new Set(weight, reps, rir));
     }
 
-    public void printExcercise() {
-        System.out.println(name + ":");
+    public String returnExercise() {
+        StringBuilder output = new StringBuilder(name + ":\n");
         if (sets.isEmpty()) {
-            System.out.println("    1: ???kg: ??? reps || ???RIR");
+            return output.append("    1: ???kg: ??? reps || ???RIR\n").toString();
         } else {
             for (int i = 1; i <= sets.size(); i++) {
-                System.out.println("    " + i + ": " + sets.get(i - 1).returnSet());
+                output.append("    ").append(i).append(": ").append(sets.get(i - 1).returnSet()).append("\n");
             }
+            return output.toString();
         }
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public List<Set> getSets() {
+        return sets;
+    }
 }
 
