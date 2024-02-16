@@ -22,6 +22,7 @@ public class TemplateTest {
 
     @Test
     public void validHumanIndexTest() {
+        assertFalse(template.validHumanIndex("0"));
         assertTrue(template.validHumanIndex("1"));
         assertTrue(template.validHumanIndex("2"));
         assertFalse(template.validHumanIndex("3"));
@@ -38,6 +39,7 @@ public class TemplateTest {
 
     @Test
     public void printTemplateTest() {
+        assertEquals("Test", template.getName());
         StringBuilder expected = new StringBuilder("Test template:\n");
         expected.append("1. ").append(template.getExcercises().get(0).returnExercise());
         expected.append("2. ").append(template.getExcercises().get(1).returnExercise());
