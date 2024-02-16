@@ -20,6 +20,9 @@ public class Exercise {
         sets.add(new Set(weight, reps, rir));
     }
 
+    // EFFECTS: returns the exercise in the format "name:"
+    //          if there are no sets, returns "    1: ???kg: ??? reps || ???RIR"
+    //         otherwise, returns the exercise with each set
     public String returnExercise() {
         StringBuilder output = new StringBuilder(name + ":\n");
         if (sets.isEmpty()) {

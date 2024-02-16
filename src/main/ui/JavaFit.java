@@ -17,6 +17,7 @@ public class JavaFit {
         run();
     }
 
+    // MODIFIES: this
     // EFFECTS: runs the JavaFit application
     private void run() {
         scanner = new Scanner(System.in).useDelimiter("\n");
@@ -45,6 +46,7 @@ public class JavaFit {
         System.out.println("\tq -> quit");
     }
 
+    // MODIFIES: this
     // EFFECTS: processes user command
     private void handleMainMenuCommand(String command) {
         switch (command) {
@@ -203,6 +205,7 @@ public class JavaFit {
         System.out.println("\tc -> complete the workout");
     }
 
+    // MODIFIES: this
     // EFFECTS: processes user command
     private void handleWorkoutMenuCommand(String command) {
         switch (command) {

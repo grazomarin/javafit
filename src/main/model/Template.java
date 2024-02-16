@@ -12,6 +12,9 @@ public class Template {
         this.excercises = new ArrayList<Exercise>();
     }
 
+    // REQUIRES: excerciseName has a non-zero length
+    // MODIFIES: this
+    // EFFECTS: adds an excercise to the template
     public void addExercise(String excerciseName) {
         excercises.add(new Exercise(excerciseName));
     }
@@ -25,6 +28,7 @@ public class Template {
     }
 
     // REQUIRES: command is a valid index from 1 to exercises.size()
+    // EFFECTS: returns true if the command is a valid index
     public boolean validHumanIndex(String command) {
         int index = Integer.parseInt(command);
         return index > 0 && index <= excercises.size();

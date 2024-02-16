@@ -13,6 +13,7 @@ public class Set {
         this.rir = rir;
     }
 
+    // EFFECTS: returns the set in the format "weightkg: reps reps || rirRIR"
     public String returnSet() {
         return weight + "kg: " + reps + " reps || " + rir + "RIR";
     }
