@@ -46,6 +46,8 @@ public class JavaFit {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads templates from file
     private void loadTemplates() {
         try {
             templates = jsonReader.read();
@@ -73,6 +75,7 @@ public class JavaFit {
         }
     }
 
+    // MODIFIES: this
     private void promptSavingData() {
         System.out.println("Would you like to save your data? (y/n)");
         String command = scanner.next().toLowerCase();
@@ -86,6 +89,7 @@ public class JavaFit {
         }
     }
 
+    // EFFECTS: saves templates to file
     private void saveTemplates() {
         try {
             jsonWriter.open();
@@ -97,6 +101,7 @@ public class JavaFit {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: displays the menu of options to the user
     private void displayMainMenu() {
         System.out.println("\nSelect from:");
@@ -137,6 +142,7 @@ public class JavaFit {
         // TODO add ability to view a template in detail
     }
 
+    // MODIFIES: this
     // EFFECTS: creates a new workout template
     private void createTemplate() {
         System.out.println("Enter the name of the template:");
@@ -254,6 +260,7 @@ public class JavaFit {
 
     }
 
+    // MODIFIES: this
     // EFFECTS: displays the menu of options to the user
     private void displayWorkoutMenu() {
         System.out.println("\nSelect from:");

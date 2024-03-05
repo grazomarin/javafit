@@ -26,6 +26,8 @@ public class Template implements Writable {
 //        // TODO add ability to remove exercise
 //    }
 
+    // REQUIRES: weight > 0, reps > 0, 10 >= rir >= 0
+    // MODIFIES: this
     public void addSet(int humanIndex, int weight, int reps, int rir) {
         exercises.get(humanIndex - 1).addSet(weight, reps, rir);
     }
@@ -59,6 +61,7 @@ public class Template implements Writable {
         return exercises;
     }
 
+    // EFFECTS: returns Template as a JSON object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
