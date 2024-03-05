@@ -11,13 +11,13 @@ public class TemplateTest {
     @BeforeEach
     public void setup() {
         template = new Template("Test");
-        template.addExercise("Bench Press");
-        template.addExercise("Leg Press");
+        template.addExercise(new Exercise("Bench Press"));
+        template.addExercise(new Exercise("Leg Press"));
     }
 
     @Test
     public void addExerciseTest() {
-        assertEquals(2, template.getExcercises().size());
+        assertEquals(2, template.getExercise().size());
     }
 
     @Test
@@ -33,16 +33,16 @@ public class TemplateTest {
         template.addSet(1, 100, 20, 10);
         template.addSet(1, 120, 20, 10);
         template.addSet(2, 140, 20, 9);
-        assertEquals(2, template.getExcercises().get(0).getSets().size());
-        assertEquals(1, template.getExcercises().get(1).getSets().size());
+        assertEquals(2, template.getExercise().get(0).getSets().size());
+        assertEquals(1, template.getExercise().get(1).getSets().size());
     }
 
     @Test
     public void printTemplateTest() {
         assertEquals("Test", template.getName());
         StringBuilder expected = new StringBuilder("Test template:\n");
-        expected.append("1. ").append(template.getExcercises().get(0).returnExercise());
-        expected.append("2. ").append(template.getExcercises().get(1).returnExercise());
+        expected.append("1. ").append(template.getExercise().get(0).returnExercise());
+        expected.append("2. ").append(template.getExercise().get(1).returnExercise());
         assertEquals(expected.toString(), template.returnTemplate());
     }
 

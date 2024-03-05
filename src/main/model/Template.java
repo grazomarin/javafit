@@ -1,45 +1,49 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistance.Writable;
+
 import java.util.*;
 
 // Represents a template for a Workout
-public class Template {
+public class Template implements Writable {
     private String name;
-    private List<Exercise> excercises;
+    private List<Exercise> exercise;
 
     public Template(String name) {
         this.name = name;
-        this.excercises = new ArrayList<Exercise>();
+        this.exercise = new ArrayList<Exercise>();
     }
 
-    // REQUIRES: excerciseName has a non-zero length
     // MODIFIES: this
-    // EFFECTS: adds an excercise to the template
-    public void addExercise(String excerciseName) {
-        excercises.add(new Exercise(excerciseName));
+    // EFFECTS: adds an exercise to the template
+    public void addExercise(Exercise exercise) {
+        this.exercise.add(exercise);
     }
 
-//    public void removeExcercise(Excercise excercise) {
-//        // TODO add ability to remove excercise
+//    public void removeExercise(Exercise exercise) {
+//        // TODO add ability to remove exercise
 //    }
 
     public void addSet(int humanIndex, int weight, int reps, int rir) {
-        excercises.get(humanIndex - 1).addSet(weight, reps, rir);
+        exercise.get(humanIndex - 1).addSet(weight, reps, rir);
     }
 
     // REQUIRES: command is a valid index from 1 to exercises.size()
     // EFFECTS: returns true if the command is a valid index
+    // TODO add try catch for invalid input
     public boolean validHumanIndex(String command) {
         int index = Integer.parseInt(command);
-        return index > 0 && index <= excercises.size();
+        return index > 0 && index <= exercise.size();
     }
 
-    // REQUIRES: excerciseName has a non-zero length and has at least 1 exercise
+    // REQUIRES: exerciseName has a non-zero length and has at least 1 exercise
     // EFFECTS: prints the template
     public String returnTemplate() {
         StringBuilder output = new StringBuilder(name + " template:\n");
-        for (int i = 1; i <= excercises.size(); i++) {
-            output.append(i).append(". ").append(excercises.get(i - 1).returnExercise());
+        for (int i = 1; i <= exercise.size(); i++) {
+            output.append(i).append(". ").append(exercise.get(i - 1).returnExercise());
         }
         return output.toString();
     }
@@ -48,7 +52,26 @@ public class Template {
         return name;
     }
 
-    public List<Exercise> getExcercises() {
-        return excercises;
+    public List<Exercise> getExercise() {
+        return exercise;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("exercises", exerciseToJson());
+        return json;
+    }
+
+    // EFFECTS: returns exercises in this template as a JSON array
+    private JSONArray exerciseToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Exercise e : exercise) {
+            jsonArray.put(e.toJson());
+        }
+
+        return jsonArray;
     }
 }

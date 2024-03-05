@@ -11,9 +11,16 @@ Combining my love for coding with my enthusiasm, for fitness appeared to be a bl
 
 As a user, I want to be able to:
 
+### Phase 1
+
 - create an exercise
 - create a template
 - start a workout
 - add sets, reps, and RIR to an exercise
 - add exercises to a template
 - view all of my templates
+
+### Phase 2
+
+- optionally save my app session
+- optionally load my most recently saved app session

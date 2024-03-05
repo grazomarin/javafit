@@ -6,26 +6,26 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ExerciseTest {
-    private Exercise excercise;
+    private Exercise exercise;
 
     @BeforeEach
     public void setup() {
-        excercise = new Exercise("Bench Press");
+        exercise = new Exercise("Bench Press");
     }
 
     @Test
     public void addSetTest() {
-        excercise.addSet(100, 20, 10);
-        assertEquals(1, excercise.getSets().size());
-        assertEquals("Bench Press", excercise.getName());
+        exercise.addSet(100, 20, 10);
+        assertEquals(1, exercise.getSets().size());
+        assertEquals("Bench Press", exercise.getName());
     }
 
     @Test
-    public void printExcerciseTest() {
-        assertEquals("Bench Press:\n    1: ???kg: ??? reps || ???RIR\n", excercise.returnExercise());
-        excercise.addSet(100, 20, 10);
-        excercise.addSet(120, 10, 10);
-        assertEquals("Bench Press:\n    1: 100kg: 20 reps || 10RIR\n    2: 120kg: 10 reps || 10RIR\n", excercise.returnExercise());
+    public void printExerciseTest() {
+        assertEquals("Bench Press:\n    1: ???kg: ??? reps || ???RIR\n", exercise.returnExercise());
+        exercise.addSet(100, 20, 10);
+        exercise.addSet(120, 10, 10);
+        assertEquals("Bench Press:\n    1: 100kg: 20 reps || 10RIR\n    2: 120kg: 10 reps || 10RIR\n", exercise.returnExercise());
     }
 
 }

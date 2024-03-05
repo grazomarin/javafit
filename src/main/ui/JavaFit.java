@@ -1,6 +1,9 @@
 package ui;
 
+import model.Exercise;
 import model.Template;
+import persistance.JsonReader;
+import persistance.JsonWriter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,31 +12,88 @@ import java.util.Scanner;
 
 // JavaFit application
 public class JavaFit {
+    private static final String JSON_STORE = "./data/storage.json";
     private Template currentWorkout = null;
     private List<Template> templates = new ArrayList<Template>();
     private Scanner scanner;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
 
     public JavaFit() {
-        run();
+        scanner = new Scanner(System.in).useDelimiter("\n");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+
+        printIntro();
+        promptLoadingSavedData();
+        launchApplication();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: prompts the user to load saved data
+    private void promptLoadingSavedData() {
+        System.out.println("Would you like to load saved data? (y/n)");
+        String command = scanner.next().toLowerCase();
+        if (command.equals("y")) {
+            loadTemplates();
+        } else if (command.equals("n")) {
+            System.out.println("No saved data loaded...");
+        } else {
+            System.out.println("Invalid selection...");
+            promptLoadingSavedData();
+        }
+
+    }
+
+    private void loadTemplates() {
+        try {
+            templates = jsonReader.read();
+            System.out.println("Loaded saved data!");
+        } catch (Exception e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: runs the JavaFit application
-    private void run() {
-        scanner = new Scanner(System.in).useDelimiter("\n");
+    private void launchApplication() {
         boolean keepGoing = true;
 
-        printIntro();
         while (keepGoing) {
             displayMainMenu();
-            String command = scanner.next();
-            command = command.toLowerCase();
+            String command = scanner.next().toLowerCase();
 
             if (command.equals("q")) {
+                promptSavingData();
                 keepGoing = false;
             } else {
                 handleMainMenuCommand(command);
             }
+        }
+    }
+
+    private void promptSavingData() {
+        System.out.println("Would you like to save your data? (y/n)");
+        String command = scanner.next().toLowerCase();
+        if (command.equals("y")) {
+            saveTemplates();
+        } else if (command.equals("n")) {
+            System.out.println("No data saved...");
+        } else {
+            System.out.println("Invalid selection...");
+            promptSavingData();
+        }
+    }
+
+    private void saveTemplates() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(templates);
+            jsonWriter.close();
+            System.out.println("Saved " + templates.size() + " templates to " + JSON_STORE);
+        } catch (Exception e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
         }
     }
 
@@ -149,7 +209,7 @@ public class JavaFit {
                 if (name.isEmpty()) {
                     System.out.println("Name cannot be empty...");
                 } else {
-                    template.addExercise(name);
+                    template.addExercise(new Exercise(name));
                     counter++;
                 }
             }
@@ -164,7 +224,7 @@ public class JavaFit {
         while (keepGoing) {
             System.out.println("Enter the index of the exercise: enter \"q\" to cancel.");
             String command = scanner.next().toLowerCase();
-            this.handlAddSetMenuCommand(command);
+            this.handleAddSetMenuCommand(command);
             System.out.println(this.currentWorkout.returnTemplate());
 
             if (command.equalsIgnoreCase("q")) {
@@ -175,7 +235,7 @@ public class JavaFit {
 
     // MODIFIES: this
     // EFFECTS: allows user to add weight, reps, and RIR to a set
-    private void handlAddSetMenuCommand(String command) {
+    private void handleAddSetMenuCommand(String command) {
         if (command.equalsIgnoreCase("q")) {
             System.out.println("Cancelled adding a set...");
             return;
@@ -237,7 +297,7 @@ public class JavaFit {
                         +
                         "    \\  /\\  /|  __/| || (__| (_) || | | | | ||  __/ | |_| (_) | | |__| || (_| | \\ V /| (_| || |     | || |_ \n"
                         +
-                        "     \\/  \\/  \\___||_| \\___|\\___/ |_| |_| |_| \\___|  \\__|\\___/   \\____/  \\__,_|  \\_/  \\__,_||_|     |_| \\__|"
+                        "     \\/  \\/  \\___||_| \\___|\\___/ |_| |_| |_| \\___|  \\__|\\___/   \\____/  \\__,_|  \\_/  \\__,_||_|     |_| \\__|\n\n"
         );
     }
 
