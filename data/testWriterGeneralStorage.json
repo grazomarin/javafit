@@ -1,0 +1,28 @@
+{"templates": [{
+    "exercises": [
+        {
+            "sets": [{
+                "reps": 10,
+                "weight": 100,
+                "rir": 5
+            }],
+            "name": "Bench Press"
+        },
+        {
+            "sets": [
+                {
+                    "reps": 12,
+                    "weight": 10,
+                    "rir": 6
+                },
+                {
+                    "reps": 11,
+                    "weight": 12,
+                    "rir": 7
+                }
+            ],
+            "name": "Hammer Curl"
+        }
+    ],
+    "name": "Kamran"
+}]}

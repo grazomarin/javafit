@@ -30,4 +30,19 @@ public class Set implements Writable {
         json.put("rir", rir);
         return json;
     }
+
+    // EFFECTS: returns weight of the set
+    public int getWeight() {
+        return weight;
+    }
+
+    // EFFECTS: returns reps of the set
+    public int getReps() {
+        return reps;
+    }
+
+    // EFFECTS: returns rir of the set
+    public int getRir() {
+        return rir;
+    }
 }
