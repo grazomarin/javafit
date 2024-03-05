@@ -1,0 +1,34 @@
+{
+  "templates": [
+    {
+      "exercises": [
+        {
+          "sets": [
+            {
+              "reps": 19,
+              "weight": 19,
+              "rir": 1
+            },
+            {
+              "reps": 10,
+              "weight": 100,
+              "rir": 5
+            }
+          ],
+          "name": "Bench Press"
+        },
+        {
+          "sets": [
+            {
+              "reps": 20,
+              "weight": 20,
+              "rir": 1
+            }
+          ],
+          "name": "Squat"
+        }
+      ],
+      "name": "Kamran"
+    }
+  ]
+}

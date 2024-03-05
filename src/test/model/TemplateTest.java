@@ -17,7 +17,7 @@ public class TemplateTest {
 
     @Test
     public void addExerciseTest() {
-        assertEquals(2, template.getExercise().size());
+        assertEquals(2, template.getExercises().size());
     }
 
     @Test
@@ -33,16 +33,16 @@ public class TemplateTest {
         template.addSet(1, 100, 20, 10);
         template.addSet(1, 120, 20, 10);
         template.addSet(2, 140, 20, 9);
-        assertEquals(2, template.getExercise().get(0).getSets().size());
-        assertEquals(1, template.getExercise().get(1).getSets().size());
+        assertEquals(2, template.getExercises().get(0).getSets().size());
+        assertEquals(1, template.getExercises().get(1).getSets().size());
     }
 
     @Test
     public void printTemplateTest() {
         assertEquals("Test", template.getName());
         StringBuilder expected = new StringBuilder("Test template:\n");
-        expected.append("1. ").append(template.getExercise().get(0).returnExercise());
-        expected.append("2. ").append(template.getExercise().get(1).returnExercise());
+        expected.append("1. ").append(template.getExercises().get(0).returnExercise());
+        expected.append("2. ").append(template.getExercises().get(1).returnExercise());
         assertEquals(expected.toString(), template.returnTemplate());
     }
 
