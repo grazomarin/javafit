@@ -2,20 +2,20 @@ package ui;
 
 import model.Exercise;
 import model.Template;
+import model.Set;
 import persistance.JsonReader;
 import persistance.JsonWriter;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class JavaFitGUI extends JFrame {
     private static final String JSON_STORE = "./data/storage.json";
     private Template currentWorkout = null;
     private List<Template> templates = new ArrayList<Template>();
-    private Scanner scanner;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
@@ -54,7 +54,9 @@ public class JavaFitGUI extends JFrame {
 
     //
     // Start of Current Workout Panel
+    private JPanel currentWorkoutContainerPanel;
     private JPanel currentWorkoutPanel;
+    private JButton completeWorkoutButton;
     // End of Current Workout Panel
     //
 
@@ -64,7 +66,6 @@ public class JavaFitGUI extends JFrame {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setSize(800, 500);
 
-        scanner = new Scanner(System.in).useDelimiter("\n");
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
@@ -110,6 +111,10 @@ public class JavaFitGUI extends JFrame {
         listOfTemplates.setVisible(!templates.isEmpty());
         createTemplateForm.setVisible(false);
         startWorkoutButton.setVisible(false);
+        if (!templates.isEmpty()) {
+            emptyTemplatesStatusField.setVisible(false);
+        }
+        currentWorkoutContainerPanel.setVisible(false);
     }
 
 
@@ -220,6 +225,7 @@ public class JavaFitGUI extends JFrame {
                     bodyHeader.setText("Select a workout template:");
                     createTemplateButton.setVisible(false);
                     startWorkoutButton.setVisible(true);
+                    createTemplateForm.setVisible(false);
                 }
 
             }
@@ -237,9 +243,104 @@ public class JavaFitGUI extends JFrame {
                     startWorkoutButton.setVisible(false);
                     selectWorkoutButton.setVisible(false);
                     templatePanel.setVisible(false);
+                    currentWorkoutContainerPanel.setVisible(true);
+                    renderCurrentWorkoutPanel();
                 }
             }
         });
+
+        completeWorkoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                currentWorkout = null;
+                currentWorkoutLabel.setText("Not Selected");
+                templatePanel.setVisible(true);
+                currentWorkoutContainerPanel.setVisible(false);
+                bodyHeader.setText("My Templates:");
+                createTemplateButton.setVisible(true);
+                selectWorkoutButton.setVisible(true);
+            }
+        });
+    }
+
+    private void renderCurrentWorkoutPanel() {
+        currentWorkoutPanel.removeAll();
+        currentWorkoutPanel.setLayout(new BoxLayout(currentWorkoutPanel, BoxLayout.Y_AXIS));
+        currentWorkoutPanel.add(Box.createVerticalStrut(10));
+        List<Exercise> currentExcercises = currentWorkout.getExercises();
+        for (int i = 0; i < currentExcercises.size(); i++) {
+            Exercise currentExercise = currentExcercises.get(i);
+            List<Set> sets = currentExercise.getSets();
+            JLabel exerciseLabel = new JLabel((i + 1) + ". " + currentExercise.getName());
+            JList<String> setsList = new JList<>(sets.stream().map(Set::returnSet).toArray(String[]::new));
+
+            JPanel setFormPanel = createSetForm(currentExercise, setsList);
+            setFormPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+
+            currentWorkoutPanel.add(exerciseLabel);
+            currentWorkoutPanel.add(setsList);
+            currentWorkoutPanel.add(setFormPanel);
+
+
+
+            setsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            setsList.setAlignmentX(Component.LEFT_ALIGNMENT);
+            exerciseLabel.setHorizontalAlignment(SwingConstants.LEFT);
+            exerciseLabel.setForeground(Color.WHITE);
+            setsList.setForeground(Color.WHITE);
+            setsList.setBackground(new Color(23, 26, 31, 0));
+            exerciseLabel.setFont(new Font("Calibri", Font.BOLD, 20));
+            setsList.setFont(new Font("Calibri", Font.PLAIN, 18));
+
+        }
+
+        currentWorkoutPanel.revalidate();
+        currentWorkoutPanel.repaint();
+    }
+
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    private static JPanel createSetForm(Exercise currentExercise, JList<String> setsList) {
+        JPanel setFormPanel = new JPanel();
+        setFormPanel.setLayout(new FlowLayout());
+        JSpinner weightInput = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
+        JSpinner repsInput = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
+        JSpinner rirInput = new JSpinner(new SpinnerNumberModel(0, 0, 10, 1));
+        JButton addSetButton = new JButton("Add Set");
+
+
+        addSetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Integer weight = (Integer) weightInput.getValue();
+                Integer reps = (Integer) repsInput.getValue();
+                Integer rir = (Integer) rirInput.getValue();
+
+                if (weight <= 0 || reps <= 0 || rir <= 0) {
+                    return;
+                }
+
+                currentExercise.addSet(weight, reps, rir);
+                setsList.setListData(currentExercise.getSets().stream().map(Set::returnSet).toArray(String[]::new));
+
+                weightInput.setValue(0);
+                repsInput.setValue(0);
+                rirInput.setValue(0);
+
+                setsList.revalidate();
+                setsList.repaint();
+            }
+        });
+
+        setFormPanel.setBackground(new Color(23, 26, 31));
+        weightInput.setFont(new Font("Calibri", Font.PLAIN, 18));
+        repsInput.setFont(new Font("Calibri", Font.PLAIN, 18));
+        rirInput.setFont(new Font("Calibri", Font.PLAIN, 18));
+        setFormPanel.add(weightInput);
+        setFormPanel.add(repsInput);
+        setFormPanel.add(rirInput);
+        setFormPanel.add(addSetButton);
+        return setFormPanel;
     }
 
     public static void main(String[] args) {
