@@ -16,7 +16,7 @@ As a user, I want to be able to:
 - create an exercise
 - create a template
 - start a workout
-- add sets, reps, and RIR to an exercise
+- add sets, reps, and RIR to an exercise 
 - add exercises to a template
 - view all of my templates
 
@@ -24,3 +24,18 @@ As a user, I want to be able to:
 
 - optionally save my app session
 - optionally load my most recently saved app session
+
+### Phase 3
+
+## Instructions for Grader
+
+You can:
+
+- add exercises to a template by inputting exercise name into the text field during "Create Template"
+- create a template by pressing the "Create Template" button
+- start a workout by pressing the "Select Workout" button, then selecting a template from the list and then pressing
+    start workout
+- add sets, reps, and RIR to an exercise by inputting the values into the input fields and then pressing the "add" button
+- view all of your templates (list of templates displayed on the main menu)
+- optionally save your app session by attempting to close the app, you will be prompted to save your session
+- optionally load your most recently saved app session by opening the app, you will be prompted to load your session

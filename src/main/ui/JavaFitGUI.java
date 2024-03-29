@@ -12,6 +12,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// Represents the JavaFit GUI
 public class JavaFitGUI extends JFrame {
     private static final String JSON_STORE = "./data/storage.json";
     private Template currentWorkout = null;
@@ -60,6 +61,7 @@ public class JavaFitGUI extends JFrame {
     // End of Current Workout Panel
     //
 
+    // EFFECTS: constructs the JavaFit GUI
     public JavaFitGUI() {
         super("JavaFit");
         setContentPane(javaFit);
@@ -77,6 +79,7 @@ public class JavaFitGUI extends JFrame {
 
     }
 
+    // EFFECTS: prompts user to load saved data
     public void promptLoadingSavedData() {
         int confirm = JOptionPane.showConfirmDialog(this, "Would you like to load saved data?",
                 "JavaFit", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -86,6 +89,8 @@ public class JavaFitGUI extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads templates from JSON_STORE
     public void loadTemplates() {
         try {
             templates = jsonReader.read();
@@ -94,6 +99,8 @@ public class JavaFitGUI extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: saves templates to JSON_STORE
     public void saveTemplates() {
         try {
             jsonWriter.open();
@@ -106,7 +113,8 @@ public class JavaFitGUI extends JFrame {
         }
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: loads the initial layout
     public void loadInitialLayout() {
         listOfTemplates.setVisible(!templates.isEmpty());
         createTemplateForm.setVisible(false);
@@ -117,12 +125,14 @@ public class JavaFitGUI extends JFrame {
         currentWorkoutContainerPanel.setVisible(false);
     }
 
-
+    // EFFECTS: displays an error message
     private void displayErrorMessage(String s) {
         JOptionPane.showMessageDialog(this, s,
                 "JavaFit", JOptionPane.ERROR_MESSAGE);
     }
 
+    // MODIFIES: this
+    // EFFECTS: updates the list of templates
     private void updateListOfTemplates() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         for (Template template : templates) {
@@ -139,6 +149,8 @@ public class JavaFitGUI extends JFrame {
         templatePanel.repaint();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a template with the given name and exercises
     public void createTemplate(String templateName, List<String> templateExercises) {
         Template newTemplate = new Template(templateName);
         for (String exercise : templateExercises) {
@@ -147,6 +159,7 @@ public class JavaFitGUI extends JFrame {
         templates.add(newTemplate);
     }
 
+    // EFFECTS: parses exercises from input
     public static List<String> parseExercises(String input) {
         String[] lines = input.split("\\r?\\n");
 
@@ -160,8 +173,11 @@ public class JavaFitGUI extends JFrame {
         return exercises;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets listeners for the JavaFit GUI
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public void setListeners() {
+        // EFFECTS: sets listener for the window on load
         super.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -183,6 +199,7 @@ public class JavaFitGUI extends JFrame {
             }
         });
 
+        // EFFECTS: sets listener for the create template button
         createTemplateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -193,6 +210,7 @@ public class JavaFitGUI extends JFrame {
             }
         });
 
+        // EFFECTS: sets listener for the confirm create template button
         confirmCreateTemplateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -216,6 +234,7 @@ public class JavaFitGUI extends JFrame {
 
         });
 
+        // EFFECTS: sets listener for the select workout button
         selectWorkoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -231,6 +250,7 @@ public class JavaFitGUI extends JFrame {
             }
         });
 
+        // EFFECTS: sets listeners for the start workout button
         startWorkoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -249,6 +269,7 @@ public class JavaFitGUI extends JFrame {
             }
         });
 
+        // EFFECTS: sets listeners for the current workout panel
         completeWorkoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -263,6 +284,9 @@ public class JavaFitGUI extends JFrame {
         });
     }
 
+    // MODIFIES: this
+    // EFFECTS: renders the current workout panel
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void renderCurrentWorkoutPanel() {
         currentWorkoutPanel.removeAll();
         currentWorkoutPanel.setLayout(new BoxLayout(currentWorkoutPanel, BoxLayout.Y_AXIS));
@@ -299,6 +323,8 @@ public class JavaFitGUI extends JFrame {
         currentWorkoutPanel.repaint();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a set form
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private static JPanel createSetForm(Exercise currentExercise, JList<String> setsList) {
         JPanel setFormPanel = new JPanel();
@@ -343,6 +369,7 @@ public class JavaFitGUI extends JFrame {
         return setFormPanel;
     }
 
+    // EFFECTS: starts the JavaFit GUI
     public static void main(String[] args) {
         new JavaFitGUI();
     }
