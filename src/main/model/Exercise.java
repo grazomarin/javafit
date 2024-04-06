@@ -22,6 +22,7 @@ public class Exercise implements Writable {
     // EFFECTS: adds a set to the exercise
     public void addSet(int weight, int reps, int rir) {
         sets.add(new Set(weight, reps, rir));
+        EventLog.getInstance().logEvent(new Event("Added set to exercise: " + name));
     }
 
     // EFFECTS: returns the exercise in the format "name:"

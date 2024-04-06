@@ -39,3 +39,5 @@ You can:
 - view all of your templates (list of templates displayed on the main menu)
 - optionally save your app session by attempting to close the app, you will be prompted to save your session
 - optionally load your most recently saved app session by opening the app, you will be prompted to load your session
+
+### Phase 4: Task 2

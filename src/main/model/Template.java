@@ -14,12 +14,14 @@ public class Template implements Writable {
     public Template(String name) {
         this.name = name;
         this.exercises = new ArrayList<Exercise>();
+        EventLog.getInstance().logEvent(new Event("Created template: " + name));
     }
 
     // MODIFIES: this
     // EFFECTS: adds an exercise to the template
     public void addExercise(Exercise exercise) {
         this.exercises.add(exercise);
+        EventLog.getInstance().logEvent(new Event("Added exercise: " + exercise.getName() + " to template: " + name));
     }
 
 //    public void removeExercise(Exercise exercise) {

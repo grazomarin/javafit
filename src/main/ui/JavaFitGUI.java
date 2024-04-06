@@ -1,10 +1,13 @@
 package ui;
 
+import model.EventLog;
+import model.Event;
 import model.Exercise;
 import model.Template;
 import model.Set;
 import persistance.JsonReader;
 import persistance.JsonWriter;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -194,6 +197,7 @@ public class JavaFitGUI extends JFrame {
                     saveTemplates();
                 }
 
+                printAllEvents();
                 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 dispose();
             }
@@ -250,6 +254,7 @@ public class JavaFitGUI extends JFrame {
             }
         });
 
+
         // EFFECTS: sets listeners for the start workout button
         startWorkoutButton.addActionListener(new ActionListener() {
             @Override
@@ -282,6 +287,12 @@ public class JavaFitGUI extends JFrame {
                 selectWorkoutButton.setVisible(true);
             }
         });
+    }
+
+    private void printAllEvents() {
+        for (Event e: EventLog.getInstance()) {
+            System.out.println(e.toString());
+        }
     }
 
     // MODIFIES: this
@@ -329,6 +340,9 @@ public class JavaFitGUI extends JFrame {
     private static JPanel createSetForm(Exercise currentExercise, JList<String> setsList) {
         JPanel setFormPanel = new JPanel();
         setFormPanel.setLayout(new FlowLayout());
+        JLabel weightLabel = new JLabel("Weight (kg):");
+        JLabel repsLabel = new JLabel("Reps:");
+        JLabel rirLabel = new JLabel("RIR:");
         JSpinner weightInput = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
         JSpinner repsInput = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
         JSpinner rirInput = new JSpinner(new SpinnerNumberModel(0, 0, 10, 1));
@@ -362,8 +376,17 @@ public class JavaFitGUI extends JFrame {
         weightInput.setFont(new Font("Calibri", Font.PLAIN, 18));
         repsInput.setFont(new Font("Calibri", Font.PLAIN, 18));
         rirInput.setFont(new Font("Calibri", Font.PLAIN, 18));
+        weightLabel.setFont(new Font("Calibri", Font.PLAIN, 18));
+        repsLabel.setFont(new Font("Calibri", Font.PLAIN, 18));
+        rirLabel.setFont(new Font("Calibri", Font.PLAIN, 18));
+        weightLabel.setForeground(Color.WHITE);
+        repsLabel.setForeground(Color.WHITE);
+        rirLabel.setForeground(Color.WHITE);
+        setFormPanel.add(weightLabel);
         setFormPanel.add(weightInput);
+        setFormPanel.add(repsLabel);
         setFormPanel.add(repsInput);
+        setFormPanel.add(rirLabel);
         setFormPanel.add(rirInput);
         setFormPanel.add(addSetButton);
         return setFormPanel;
