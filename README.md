@@ -41,3 +41,15 @@ You can:
 - optionally load your most recently saved app session by opening the app, you will be prompted to load your session
 
 ### Phase 4: Task 2
+
+### Phase 4: Task 3
+
+![UML_Design_Diagram.jpg](uml%2FUML_Design_Diagram.jpg)
+
+#### Refactoring
+
+If I had to refactor my code I would probably implement event listeners in JavaFitGUI class in a more OO way.
+Currently, the way they are implemented is that a method is called and inside that method all the listeners are created.
+In order to make it more OO, I would create a separate private classes for each listener and then pass them down to
+each of the components that need them.
+
